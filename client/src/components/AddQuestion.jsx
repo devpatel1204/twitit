@@ -11,7 +11,6 @@ const AddQuestion = () => {
     const {account, setAccount} = useContext(LoginContext);
 
     const questionInitialValues = {
-        title: '',
         content: '',
         usernameQ: account
     };
@@ -43,6 +42,7 @@ const AddQuestion = () => {
             setquestion({ ...question, content: ''});
             return;  
         }
+        console.log(questionInitialValues);
         setquestion(questionInitialValues);
     }
 
@@ -68,7 +68,7 @@ const AddQuestion = () => {
                     </Form.Group>
                 </Row>
                 <p> remaining words {count} </p>
-                <Button size="lg" variant="outline-light" style={{color:'orange'}} onClick={() => clickHandler()} style={{marginLeft: '45%', marginTop: 40}}>
+                <Button size="lg" variant="outline-dark" style={{color:'black'}} onClick={() => clickHandler()} style={{marginLeft: '45%', marginTop: 40}}>
                     Submit
                 </Button>
             </Form>
