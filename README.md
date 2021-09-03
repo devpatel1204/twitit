@@ -1,4 +1,4 @@
-# stckoverflow-clone
+# Twitit
 
 ## Technology Stack
 
@@ -15,7 +15,7 @@
 Clone the project to local system and open the current folder
 
 ```bash
-cd .\stackoverflow\
+cd .\client\
 npm install
 ```
 Again go the main folder 
@@ -28,7 +28,7 @@ npm install
 
 
 ```bash
-cd .\stackoverflow\
+cd .\client\
 npm start
 ```
 
@@ -44,16 +44,18 @@ npm start
 
 - Signup
 - Login
-- Add Questions
-- Add Answers
+- Upload Post with charchter limit 140
+- Follower
+- Following
 - Profile Page
-- Edit Question
-- See Question and answer on Home page
+- Edit Post
+- See Uploaded post at Home page
 
 ## Usage
 
 - First Signup and than you will be redirected to login.
-- After login the header will show your username and in dropdown menu there is Myprofile and logout option.
-- To add question or also to add answer do login.
-- To check your Questions click on Myprofile.
+- After login Home page shows Posts
+- To add Post do login.
+- To check your Post, Followers, Followings click on Myprofile.
+- To Follow people click on users
 
