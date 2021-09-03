@@ -2,7 +2,7 @@ import express from 'express';
 import User from '../schema/User.js';
 import Answer from '../schema/Answer.js'
 import Question from '../schema/Question.js';
-
+import Follow from '../schema/follow.js';
 const router=express.Router();
 
 
@@ -15,6 +15,43 @@ router.post('/signin', async (req,res,next) => {
     User.create(req.body)
     .then(data => res.json(data))
     .catch(next => console.log(next));
+})
+
+router.post('/follow', async (req,res,next) => {
+    const exist = await Follow.findOne({ userid: req.body.username1 });
+    const exist1 = await Follow.findOne({ userid: req.body.username2 });
+    if(exist)
+    {
+        const hh = await Follow.findOneAndUpdate({ userid: req.body.username1 },{ $push : {
+            following: req.body.username2
+        }})
+    }
+    else 
+    {
+        Follow.create({
+            userid: req.body.username1,
+            follower: [],
+            following: [req.body.username2]
+        })
+        .then(data => res.json(data))
+        .catch(next => console.log(next));
+    }
+    if(exist1)
+    {
+        const hh = await Follow.findOneAndUpdate({ userid: req.body.username2 }, { $push: {
+            follower: req.body.username1
+        }})
+    }
+    else 
+    {
+        Follow.create({
+            userid: req.body.username2,
+            follower: [req.body.username1],
+            following: [] 
+        })
+        .then(data => res.json(data))
+        .catch(next => console.log(next));
+    }
 })
 
 router.post('/addquestion', async (req,res,next) => {
@@ -43,6 +80,15 @@ router.post('/addanswer', async (req,res,next) => {
 
 router.get('/question/search', async (req,res,next) => {
     const exist = await Question.find({});
+    if(exist){
+        return res.json(exist);
+    } 
+    else{
+        return res.json('no data found');
+    }
+})
+router.get('/user/search', async (req,res,next) => {
+    const exist = await User.find({});
     if(exist){
         return res.json(exist);
     } 
