@@ -9,8 +9,8 @@ const follow = new mongoose.Schema({
         index: true,
         lowercase: true
     },
-    following: [String],
-    follower: [String]
+    following: [{type: String}],
+    follower: [{type: String}]
 });
 
 

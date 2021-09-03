@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const questions = new mongoose.Schema( {
+const post = new mongoose.Schema( {
     content: {
         type: String,
         required: true
@@ -8,11 +8,10 @@ const questions = new mongoose.Schema( {
     usernameQ: {
         type: String,
         required: true,
-        timestamp: { type: Date, default: Date.now}
     }
 });
 
 
-const Question = mongoose.model('Question', questions);
+const Post = mongoose.model('Post',post);
 
-export default Question;
+export default Post;

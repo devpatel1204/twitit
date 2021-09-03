@@ -1,7 +1,7 @@
 import express from 'express';
 import User from '../schema/User.js';
-import Answer from '../schema/Answer.js'
-import Question from '../schema/Question.js';
+import Comment from '../schema/Comment.js'
+import Post from '../schema/Post.js';
 import Follow from '../schema/follow.js';
 const router=express.Router();
 
@@ -18,16 +18,18 @@ router.post('/signin', async (req,res,next) => {
 })
 
 router.post('/follow', async (req,res,next) => {
+    console.log(req.body);
     const exist = await Follow.findOne({ userid: req.body.username1 });
     const exist1 = await Follow.findOne({ userid: req.body.username2 });
     if(exist)
     {
-        const hh = await Follow.findOneAndUpdate({ userid: req.body.username1 },{ $push : {
+        const hh = await Follow.findOneAndUpdate({ userid: req.body.username1 },{ $addToSet : {
             following: req.body.username2
         }})
     }
     else 
     {
+        console.log("1");
         Follow.create({
             userid: req.body.username1,
             follower: [],
@@ -38,12 +40,13 @@ router.post('/follow', async (req,res,next) => {
     }
     if(exist1)
     {
-        const hh = await Follow.findOneAndUpdate({ userid: req.body.username2 }, { $push: {
+        const hh = await Follow.findOneAndUpdate({ userid: req.body.username2 }, {  $addToSet: {
             follower: req.body.username1
         }})
     }
     else 
     {
+        console.log("2");
         Follow.create({
             userid: req.body.username2,
             follower: [req.body.username1],
@@ -54,32 +57,32 @@ router.post('/follow', async (req,res,next) => {
     }
 })
 
-router.post('/addquestion', async (req,res,next) => {
-    const exist = await Question.findOne({ _id: req.body._id});
+router.post('/post', async (req,res,next) => {
+    const exist = await Post.findOne({ _id: req.body._id});
     if(exist){
-        return Question.updateOne({"_id":exist._id},{$set:{title:req.body.title, content:req.body.content}});
+        return Post.updateOne({"_id":exist._id},{$set:{title:req.body.title, content:req.body.content}});
     } 
     else{
-        Question.create(req.body)
+        Post.create(req.body)
         .then(data => res.json(data))
         .catch(next => console.log(next));
     }
 })
 
 
-router.post('/addanswer', async (req,res,next) => {
-    const exist = await Answer.findOne({ content: req.body.content, questionid: req.body.questionid, usernameA : req.body.usernameA});
+router.post('/add', async (req,res,next) => {
+    const exist = await Comment.findOne({ content: req.body.content, usernameQ : req.body.usernameQ});
     if(exist){
-        return res.status(401).json('answer already exist');
+        return res.status(401).json('Comment already exist');
 
     } 
-    Answer.create(req.body)
+    Comment.create(req.body)
     .then(data => res.json(data))
     .catch(next => console.log(next));
 })
 
-router.get('/question/search', async (req,res,next) => {
-    const exist = await Question.find({});
+router.get('/post/search', async (req,res,next) => {
+    const exist = await Post.find({});
     if(exist){
         return res.json(exist);
     } 
@@ -87,6 +90,7 @@ router.get('/question/search', async (req,res,next) => {
         return res.json('no data found');
     }
 })
+
 router.get('/user/search', async (req,res,next) => {
     const exist = await User.find({});
     if(exist){
@@ -96,9 +100,19 @@ router.get('/user/search', async (req,res,next) => {
         return res.json('no data found');
     }
 })
+router.get('/follow/search', async (req,res,next) => {
+    const exist = await Follow.find(req.query);
+    if(exist){
+        return res.json(exist);
+    }else{
+        return res.json('no data found');
+    }
+})
 
-router.get('/answer/search', async (req,res,next) => {
-    const exist = await Answer.find(req.query);
+
+
+router.get('/comment/search', async (req,res,next) => {
+    const exist = await Comment.find(req.query);
     if(exist){
         return res.json(exist);
     } 
@@ -116,6 +130,8 @@ router.post('/login', async (req, res, next) => {
         return res.status(401).json('Invalid Login');
     }
 })
+
+
 
 router.post('/tweet', async (req, res, next) => {
     Tweet.create(req.body)

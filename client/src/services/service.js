@@ -21,18 +21,20 @@ export const authenticateLogin = async (user) => {
     }
 }
 
-export const add_question = async (question) => {
+export const add_post = async (Post) => {
+    console.log("hjasdddddddd=>",Post);
     try {
-        return await axios.post(`${url}/addquestion`, question);
+        return await axios.post(`${url}/post`, Post);
     }
     catch(error) {
         console.log('Error while calling login api', error);
     }
 }
 
-export const add_answer = async (answer) => {
+export const add_comment = async (answer) => {
+    console.log(answer);
     try {
-        return await axios.post(`${url}/addanswer`, answer);
+        return await axios.post(`${url}/add`, answer);
     }
     catch(error) {
         console.log('Error while calling login api', error);
@@ -45,6 +47,15 @@ export const add_tweet = async (tweet) => {
     }
     catch(error) {
         console.log('Error while calling tweet api', error);
+    }
+}
+
+export const add_answer = async (answer) => {
+    try {
+        return await axios.post(`${url}/addanswer`, answer);
+    }
+    catch(error) {
+        console.log('Error while calling login api', error);
     }
 }
 

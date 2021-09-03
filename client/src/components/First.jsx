@@ -13,7 +13,7 @@ const First=()=>{
             
                         <Link to='/Signup'>
                             
-                                <Button variant="outline-light" style={{color:' #1DA1F2'}}>
+                                <Button variant="outline-primary" size="sm">
                                     Signup
                                 </Button>
                             
@@ -21,7 +21,7 @@ const First=()=>{
                           <br></br> <br></br>
                         <Link to='/Login'>
                            
-                                <Button  variant="outline-warning">
+                                <Button  variant="outline-primary" size="sm">
                                     Login
                                 </Button>
                             

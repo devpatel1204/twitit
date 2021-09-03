@@ -33,7 +33,7 @@ const Header = () => {
                <div></div>
                 :
                 <Nav className="ml-auto mx-auto">
-                    <Link to='/add_question'>
+                    <Link to='/add_Post'>
                         <Nav.Item  className="mr-4">
                             <Button variant="outline-light" style={{color:'#1DA1F2'}}>
                                 Add Your Twit
@@ -48,6 +48,11 @@ const Header = () => {
                         <Link to='/Myprofile'>
                         <div style={{color:'black', background:' white', marginLeft:14}}>
                                <p style={{marginLeft:10}}> Myprofile</p>
+                            </div>
+                            </Link>
+                            <Link to='/Userpage'>
+                        <div style={{color:'black', background:' white', marginLeft:14}}>
+                               <p style={{marginLeft:10}}> users</p>
                             </div>
                             </Link>
                             <Dropdown.Item onClick={clickHandler}>

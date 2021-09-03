@@ -40,17 +40,17 @@ const Signup = () => {
         width: '30%',
         margin: '100px auto',
         borderRadius: '5px',
-        background: 'rgba(255,255,255, 0.15)',
+        background: 'white',
         padding: 30,
         }} className="col-8">
-            <h4 style={{color: '#ffffff', display:'flex', justifyContent: "center", alignItems: "center", marginBottom: 15}}>
-                <SiGnuprivacyguard style={{color: '#ffffff', fontSize: 30}} className="mr-2"/>
-                SignUp
+           <h4 style={{color: ' #1DA1F2', display:'flex', justifyContent: "center", alignItems: "center", marginBottom: 15}}>
+                <SiGnuprivacyguard style={{color: ' #1DA1F2', fontSize: 20}} className="mr-2"/>
+                signup
             </h4>
             <Form>
                 <Row>
                     <Form.Group as={Col}>
-                        <Form.Label style={{fontSize: 20, color: '#ffffff'}}>
+                        <Form.Label style={{fontSize: 20, color: 'black'}}>
                             <span>User Name</span>
                         </Form.Label>
                         <Form.Control onChange={(e) => onInputChange(e)} value={signup.username} name="username" type="text" placeholder="Enter User Name"/>
@@ -58,13 +58,13 @@ const Signup = () => {
                 </Row>
                 <Row>
                     <Form.Group as={Col}>
-                        <Form.Label style={{fontSize: 20, color: '#ffffff'}}>
+                        <Form.Label style={{fontSize: 20, color: 'black'}}>
                             <span>Password</span>
                         </Form.Label> 
                         <Form.Control onChange={(e) => onInputChange(e)} value={signup.password} name="password" type="password" placeholder="Enter Password"/>
                     </Form.Group>
                 </Row>
-                <Button size="lg" variant="outline-light" style={{color:'orange'}} onClick={() => clickHandler()} style={{marginLeft: '40%', marginTop: 20}}>
+                <Button size="lg" variant="outline-primary"  onClick={() => clickHandler()} style={{marginLeft: '40%', marginTop: 20}}>
                     SignUp
                 </Button>
             </Form>

@@ -1,32 +1,32 @@
 import { Col, Row, Card, Spinner, Button, Container } from 'react-bootstrap';
-import {FaRegQuestionCircle} from 'react-icons/fa';
+import {FaRegpostCircle} from 'react-icons/fa';
 import axios from 'axios';
 import { LoginContext } from '../controller/loginstate';
-import AddAnswer from './AddAnswer';
-import EditQuestion from './EditQuestion';
-import SeeAnswer from './AnswerList';
+import Addcomments from './Addcomments';
+import Updatepost from './Updatepost';
+import Seecomments from './Seecomments';
 import { useEffect, useState, useContext} from 'react';
-
+import { Link } from 'react-router-dom';
 import {CgProfile,AiOutlineLike} from 'react-icons/all';
 import {FaRegComment} from 'react-icons/all';
 const url = 'http://localhost:5000/api';
 
 const Home = () => {
     
-    var [ questiondata, setQuestiondata ] = useState([]);
+    var [ postdata, setpostdata ] = useState([]);
 
     const {account, setAccount} = useContext(LoginContext);
 
     const [ clickdone, setClickdone ] = useState("false");
 
-    const [ clickquestionid, setClickquestionid ] =  useState();
+    const [ clickpostid, setClickpostid ] =  useState();
 
-    const questionSaver = async () => {
+    const postSaver = async () => {
         try {
-            await axios.get(`${url}/question/search`)
+            await axios.get(`${url}/post/search`)
             .then ((res) => {
                 console.log(res.data);
-                setQuestiondata(questiondata => ([...questiondata, res.data]));
+                setpostdata(postdata => ([...postdata, res.data]));
             })
         }catch(err) {
             console.log('Error while finding User',err);
@@ -35,40 +35,46 @@ const Home = () => {
 
 
     useEffect(() => {
-        questionSaver();
+        postSaver();
     }, [clickdone])
 
-console.log("-->quedata",questiondata);
+    console.log(postdata[0]);
+
+
     return (
         <div>
         {
             (clickdone === "false") ? 
             <div>
             {
-                // component for all the questions output
+                // component for all the posts output
                 <Row xs={1} md={1} className="justify-content-center" style={{marginLeft: '32%'}}>
                 {
-                    (questiondata[0] === undefined)?
+                    (postdata[0] === undefined)?
                         <div></div>:
-                        questiondata[0].map((question, index) => (
+                        postdata[0].map((post, index) => (
                             <Col className = "mb-3">
-                                <Card  style = {{backgroundColor: 'white', height:300,width:500, color: '#ffffff', borderWidth: '2px' , borderBlockColor:'orange'}}>
+                                <Card  style = {{backgroundColor: 'white', height:'auto',width:500, color: '#ffffff', borderWidth: '2px' , borderBlockColor:'#1DA1F2'}}>
                                     <Card.Body> 
                                         <Card.Text>
                                        
-                                           <span style={{color:'black', fontWeight:600, display:'flex'}}><h4> <CgProfile style={{color:'black'}}></CgProfile>   {question.usernameQ}</h4> </span>
+                                           <span style={{color:'black', fontWeight:600, display:'flex'}}><h4> <CgProfile style={{color:'black'}}></CgProfile>   {post.usernameQ}</h4> </span>
                                          
-                                         <span style={{color:'#1DA1F2'}}>{question.content}</span>
+                                         <span style={{color:'#1DA1F2'}}>{post.content}</span>
                                             
                                             
                                         </Card.Text>
                                         <div className="d-flex justify-content-around" style={{marginTop:70}}>
-                                            <Button variant="primary" size="sm" id="seeanswer" onClick={() => {setClickdone("seeanswer"); setClickquestionid(question)}}>
+                                        <Link to='/Seecomments'>
+                                            <Button variant="primary" size="sm" id="Seecomments" onClick={() => {setClickdone("Seecomments"); setClickpostid(post)}}>
                                                 <FaRegComment></FaRegComment>
                                             </Button>
-                                            <Button variant="secondary"size="sm" id="addanswer" onClick={() => {setClickdone("addanswer"); setClickquestionid(question)}}>
+                                            </Link>
+                                            <Link to='/Addcomments'>
+                                            <Button variant="secondary"size="sm" id="Addcomments" onClick={() => {setClickdone("Addcomments"); setClickpostid(post)}}>
                                                 Add comments
                                             </Button>
+                                            </Link>
                                         
                                            
                                         </div>
@@ -83,26 +89,26 @@ console.log("-->quedata",questiondata);
             :
             <div>
             {
-                (clickdone === "seeanswer")?
+                (clickdone === "Seecomments")?
                 <div>
-                    <SeeAnswer question={clickquestionid} />
+                    <Seecomments post={clickpostid} />
                 </div>
                 : 
                 <div>
                 {
-                    (clickdone === "addanswer")?
+                    (clickdone === "Addcomments")?
                     <div>
-                        <AddAnswer question={clickquestionid._id} />
+                        <Addcomments post={clickpostid.usernameQ} />
                     </div>
                     :
                     <div>
-                        <EditQuestion question={clickquestionid} />
+                        <Updatepost post={clickpostid} />
                     </div>
                 }
                 </div>
             }
                 <div className="d-flex justify-content-center">
-                    <Button variant="outline-light" style={{color:'orange'}} size="lg" id="addanswer" onClick={() => {setClickdone("false"); questionSaver(); setQuestiondata([])}}>
+                    <Button variant="outline-light" style={{color:'orange'}} size="lg" id="Addcomments" onClick={() => {setClickdone("false"); postSaver(); setpostdata([])}}>
                         Home page
                     </Button>
                 </div>
